@@ -38,7 +38,7 @@ public class AuthenticationDialog extends Dialog {
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setUseWideViewPort(true);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(request_url);
+        webView.loadUrl(redirect_url);
         webView.setWebViewClient(webViewClient);
     }
 
@@ -47,8 +47,8 @@ public class AuthenticationDialog extends Dialog {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             if (url.startsWith(redirect_url)) {
-                listener.onTokenReceived("my_token");
-                AuthenticationDialog.this.dismiss();
+             //   listener.onTokenReceived("my_token");
+              //  AuthenticationDialog.this.dismiss();
                 return true;
             }
             return false;
@@ -61,7 +61,6 @@ public class AuthenticationDialog extends Dialog {
                 Uri uri = Uri.EMPTY.parse(url);
                 String access_token = uri.getEncodedFragment();
                 access_token = access_token.substring(access_token.lastIndexOf("=") + 1);
-                //  String access_token = "my_token";
                 Log.e("access_token", access_token);
                 listener.onTokenReceived(access_token);
                 dismiss();
