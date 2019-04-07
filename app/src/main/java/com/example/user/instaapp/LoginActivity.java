@@ -23,11 +23,16 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +68,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
 
     private AuthenticationDialog authenticationDialog = null;
+    private DatabaseService databaseService = null;
+    private MyJavaScriptInterface javaScriptInterface = null;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +114,19 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             authenticationDialog = new AuthenticationDialog(this, this);
             authenticationDialog.setCancelable(true);
             authenticationDialog.show();
+
+           // WebView webView1 = authenticationDialog.getWebView();
+            //    authenticationDialog.initializeWebView(this.getResources().getString(R.string.get_user_info_url));
+            //   authenticationDialog.show();
+            //webView1.addJavascriptInterface(javaScriptInterface, "HTMLOUT");
+            //webView1.setWebViewClient(new WebViewClient() {
+              //  public void onPageFinished(WebView view, String address)
+               // {
+                    // have the page spill its guts, with a secret prefix
+                 //   view.loadUrl("javascript:window.HTMLOUT.getUsername('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+                //}
+            //});
+            //String name = javaScriptInterface.getUsername();*/
         }
     }
 

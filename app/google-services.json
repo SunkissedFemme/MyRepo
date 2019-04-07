@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "516614045905",
+    "firebase_url": "https://super-f9606.firebaseio.com",
+    "project_id": "super-f9606",
+    "storage_bucket": "super-f9606.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516614045905:android:f3e9fa5009c77f46",
+        "android_client_info": {
+          "package_name": "com.example.user.instaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516614045905-8g0gt2k7sad7fhchevlgbr5ejre8o6h7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlCAftlvmHotW6jqDGY5AFjAKYG_XT3Tc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:516614045905:android:d068973f5a5314ee",
+        "android_client_info": {
+          "package_name": "com.example.user.myapplication_navigationdrawer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "516614045905-8g0gt2k7sad7fhchevlgbr5ejre8o6h7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlCAftlvmHotW6jqDGY5AFjAKYG_XT3Tc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

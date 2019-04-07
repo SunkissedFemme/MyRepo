@@ -74,4 +74,21 @@ public class AuthenticationDialog extends Dialog {
     public WebView getWebView(){
         return webView;
     }
+
+    @Override
+    public void onBackPressed() {
+
+       super.onBackPressed();
+       Context context = this.getContext();
+       webView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
+        webView.setWebViewClient(new WebViewClient() {
+            public void onPageFinished(WebView view, String address)
+            {
+                // have the page spill its guts, with a secret prefix
+                view.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>', true);");
+            }
+        });
+        webView.loadUrl(webView.getUrl());
+    }
+
 }
