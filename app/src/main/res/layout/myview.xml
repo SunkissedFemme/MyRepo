@@ -54,14 +54,14 @@
 
                         />
 
-                    <TextView
+<!--                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:text="Team leader"
-                        android:id="@+id/vaddress"
+                        android:id="@+id/vname"
                         android:textColor="@color/colorLightGray"
-                        android:textSize="14dp" />
+                        android:textSize="14dp" />-->
                 </LinearLayout>
 
 
@@ -79,7 +79,7 @@
                         android:background="@drawable/roun_rect_orange"
                         android:text="Invited"
                         android:layout_marginTop="0dp"
-                        android:id="@+id/vname"
+                        android:id="@+id/vscore"
                         android:textColor="#fff"
                         android:textSize="15sp"
                         android:textStyle="bold" />

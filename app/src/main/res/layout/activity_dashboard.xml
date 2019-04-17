@@ -42,6 +42,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:onClick="onClick"
         android:text="@string/action_add_child"
         android:textStyle="bold"
          />

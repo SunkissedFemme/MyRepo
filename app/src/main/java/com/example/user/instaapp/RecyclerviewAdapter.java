@@ -34,9 +34,9 @@ public class RecyclerviewAdapter
 
     public void onBindViewHolder(MyHolder holder, int position) {
            Followed_By data = listdata.get(position);
-            holder.vname.setText(data.getName());
-            holder.vemail.setText("da");
-            holder.vaddress.setText("mere");
+            holder.vscore.setText(Integer.toString(data.getScore()));
+            holder.vemail.setText(data.getName());
+            //holder.vaddress.setText("mere");
         }
 
         @Override
@@ -46,13 +46,13 @@ public class RecyclerviewAdapter
 
 
         class MyHolder extends RecyclerView.ViewHolder{
-            TextView vname , vaddress,vemail;
+            TextView vscore, vaddress, vemail;
 
             public MyHolder(View itemView) {
                 super(itemView);
-                vname = (TextView) itemView.findViewById(R.id.vname);
-                vemail = (TextView) itemView.findViewById(R.id.vemail);
-                vaddress = (TextView) itemView.findViewById(R.id.vaddress);
+                vscore = itemView.findViewById(R.id.vscore);
+                vemail = itemView.findViewById(R.id.vemail);
+             //   vaddress = (TextView) itemView.findViewById(R.id.vaddress);
 
             }
         }

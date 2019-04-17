@@ -9,7 +9,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 class MyJavaScriptInterface {
 
@@ -17,6 +19,7 @@ class MyJavaScriptInterface {
     String username;
     private DatabaseService databaseService = null;
     private AppPreferences appPreferences;
+    private static JSONObject jsonObject;
     @JavascriptInterface
     @SuppressWarnings("unused")
     public void processHTML(String html, boolean justUsername) {
@@ -37,7 +40,7 @@ class MyJavaScriptInterface {
             Info.setUser(user);
         } else {
             String r = html.substring(html.indexOf("{"), html.lastIndexOf("}") + 1);
-            JSONObject jsonObject = null;
+           jsonObject = null;
             try {
                 jsonObject = new JSONObject(r);
             } catch (JSONException e) {
@@ -46,11 +49,15 @@ class MyJavaScriptInterface {
             //    setUsername(jsonObject);
             //  username=":"bianca.maria.3994885"";
 
-            List<String> photos_urls = getPhotosUrl(jsonObject);
+          /*  List<String> photos_urls = getPhotosUrl(jsonObject);
             List<String> mutual_followed_by = getMutualFollowedBy(jsonObject);
-            System.out.println("HTML CONTENT" + html);
+            System.out.println("HTML CONTENT" + html);*/
 
         }
+    }
+
+    public static JSONObject getJSONJsonObject(){
+        return jsonObject;
     }
 
     public List<String> getMutualFollowedBy(JSONObject jsonObject) {
@@ -74,8 +81,8 @@ class MyJavaScriptInterface {
         return followed_by_users;
     }
 
-    public List<String> getPhotosUrl(JSONObject  jsonObject) {
-        List<String> photos_link = new ArrayList<>();
+    public Map<String, Integer> getPhotosUrl(JSONObject  jsonObject) {
+        Map<String, Integer> photos_link = new HashMap<>();
         try {
             String path = "/graphql/user/edge_owner_to_timeline_media";
             JSONObject result = getObject(jsonObject, extractKeys(path));
@@ -86,7 +93,7 @@ class MyJavaScriptInterface {
                 path = "/node";
                 JSONObject photo= getObject(obj, extractKeys(path));
                 String link = photo.getString("display_url");
-                photos_link.add(link);
+                photos_link.put(link, 0);
             }
             System.out.println("Tralala");
         } catch (JSONException e) {

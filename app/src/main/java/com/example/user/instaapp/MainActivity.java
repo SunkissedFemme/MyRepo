@@ -41,7 +41,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements AuthenticationListener,NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private String token = null;
     private AppPreferences appPreferences = null;
@@ -91,14 +91,14 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    @Override
+    /*@Override
     public void onTokenReceived(String auth_token) {
         if (auth_token == null)
             return;
         appPreferences.putString(AppPreferences.TOKEN, auth_token);
         token = auth_token;
         // getUserInfoByAccessToken(token);
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity
         r.execute();
     }
 */
-    private class RequestInstagramAPI extends AsyncTask<Void, Void, String> {
+   /* private class RequestInstagramAPI extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... params) {
@@ -315,6 +315,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
-
+*/
 }
 

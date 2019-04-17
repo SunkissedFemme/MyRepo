@@ -13,7 +13,7 @@ public class AuthenticationDialog extends Dialog {
     private final String request_url;
     private final String redirect_url;
     private AuthenticationListener listener;
-    private WebView webView;
+    private static WebView webView;
 
     public AuthenticationDialog(@NonNull Context context, AuthenticationListener listener) {
         super(context);
@@ -57,7 +57,7 @@ public class AuthenticationDialog extends Dialog {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            if (url.contains("access_token=")) {
+           /* if (url.contains("access_token=")) {
                 Uri uri = Uri.EMPTY.parse(url);
                 String access_token = uri.getEncodedFragment();
                 access_token = access_token.substring(access_token.lastIndexOf("=") + 1);
@@ -67,11 +67,11 @@ public class AuthenticationDialog extends Dialog {
             } else if (url.contains("?error")) {
                 Log.e("access_token", "getting error fetching access token");
                 dismiss();
-            }
+            }*/
         }
     };
 
-    public WebView getWebView(){
+    public static WebView getWebView(){
         return webView;
     }
 
@@ -79,12 +79,11 @@ public class AuthenticationDialog extends Dialog {
     public void onBackPressed() {
 
        super.onBackPressed();
-       Context context = this.getContext();
        webView.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
         webView.setWebViewClient(new WebViewClient() {
             public void onPageFinished(WebView view, String address)
             {
-                // have the page spill its guts, with a secret prefix
+
                 view.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>', true);");
             }
         });

@@ -42,7 +42,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, AuthenticationListener{
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>{
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -111,7 +111,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void onClick(View view){
         if(view.getId()==R.id.btn_login){
-            authenticationDialog = new AuthenticationDialog(this, this);
+            authenticationDialog = new AuthenticationDialog(this, new AuthenticationListener() {
+                @Override
+                public void onTokenReceived(String auth_token) {
+
+                }
+
+                @Override
+                public void onInfoProcessed() {
+
+                }
+            });
             authenticationDialog.setCancelable(true);
             authenticationDialog.show();
 
@@ -328,14 +338,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int IS_PRIMARY = 1;
     }
 
-    @Override
-    public void onTokenReceived(String auth_token) {
-        if (auth_token == null)
-            return;
-      //  appPreferences.putString(AppPreferences.TOKEN, auth_token);
-       // token = auth_token;
-        // getUserInfoByAccessToken(token);
-    }
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.

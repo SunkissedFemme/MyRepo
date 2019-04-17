@@ -4,7 +4,8 @@
     <string name="redirect_url">https://instagram.com/</string>
     <string name="base_url">https://api.instagram.com/</string>
     <!--<string name="get_user_info_url">https://api.instagram.com/v1/users/self/?access_token=</string>-->
-    <string name="get_user_info_url">https://www.instagram.com/wolfiecindy/?__a=1</string>
+    <string name="get_user_info_url_first">https://www.instagram.com/</string>
+    <string name="get_user_info_url_second">/?__a=1</string>
     <string name="title_activity_splash1">SplashActivity1</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

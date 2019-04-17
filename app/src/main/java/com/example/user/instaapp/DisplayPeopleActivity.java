@@ -40,23 +40,16 @@ public class DisplayPeopleActivity extends AppCompatActivity {
             }
         });
     }*/
-    //TextView ename,eemail,eaddress;
-    //Button save,view;
-    FirebaseDatabase database;
-    DatabaseReference myRef;
-    List<Followed_By> f_list;
-    RecyclerView recyclerview;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+    private List<Followed_By> f_list;
+    private RecyclerView recyclerview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_people);
-      /*  ename = (TextView) findViewById(R.id.etname);
-        eemail = (TextView) findViewById(R.id.eemail);
-        eaddress = (TextView) findViewById(R.id.eaddress);
-        save = (Button) findViewById(R.id.save);
-        view = (Button) findViewById(R.id.view);*/
-        recyclerview = (RecyclerView) findViewById(R.id.recycleV);
+        recyclerview = findViewById(R.id.recycleV);
         recyclerview.setLayoutManager(new LinearLayoutManager(DisplayPeopleActivity.this));
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("users");
@@ -70,25 +63,11 @@ public class DisplayPeopleActivity extends AppCompatActivity {
                     User userdetails = dataSnapshot1.getValue(User.class);
                     List<Followed_By> fer = userdetails.getChildren().get(0).getFollowedByList();
                     f_list.addAll(fer);
-                  /*  Listdata listdata = new Listdata();
-                    String name=userdetails.getName();
-                    String email=userdetails.getEmail();
-                    String address=userdetails.getAddress();
-                    listdata.setName(name);
-                    listdata.setEmail(email);
-                    listdata.setAddress(address);
-                    list.add(listdata);*/
-                    // Toast.makeText(MainActivity.this,""+name,Toast.LENGTH_LONG).show();
-
                 }
 
                 RecyclerviewAdapter recycler = new RecyclerviewAdapter(DisplayPeopleActivity.this, f_list);
-              //  RecyclerView.LayoutManager layoutmanager = new LinearLayoutManager(DisplayPeopleActivity.this);
-
-                //recyclerview.setLayoutManager(layoutmanager);
                 recyclerview.setItemAnimator( new DefaultItemAnimator());
                 recyclerview.setAdapter(recycler);
-
             }
 
             @Override
