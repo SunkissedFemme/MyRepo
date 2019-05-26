@@ -22,4 +22,7 @@ public class InstaPhoto {
         this.score=score;
     }
 
+    public Map<String, String> getSafeAnnotationToScoreMap(){
+        return safeAnnotationToScoreMap;
+    }
 }

@@ -26,11 +26,15 @@ public class User {
     }
 
     public void addChild(Child child){
-        children.add(child);
+        if(children.isEmpty()) {
+            children.add(child);
+        }
     }
 
     public List<Child> getChildren(){
         return children;
     }
+
+
 
 }

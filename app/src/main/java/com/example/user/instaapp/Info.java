@@ -13,10 +13,14 @@ public class Info {
     private static User user;
 
     public static void setUser(User myuser){
+
         user = myuser;
+        user.addChild(new Child("ana"));
     }
 
     public static User getUser(){
         return user;
     }
+
+
 }

@@ -8,6 +8,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 
 
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -18,7 +20,9 @@ import com.google.api.services.vision.v1.VisionRequestInitializer;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +34,7 @@ import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 import com.google.api.services.vision.v1.model.ImageSource;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -37,12 +42,18 @@ import org.json.JSONObject;
 public class DashboardActivity extends AppCompatActivity  implements  AuthenticationListener{
 
     private AutoCompleteTextView nameView;
+    private EditText editText;
+    //private ImageView imgV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         Button addChild_button = findViewById(R.id.add_child_button);
         Button save_button = findViewById(R.id.save_button);
+       editText = findViewById(R.id.editTextAddFollowedBy);
+      // imgV = findViewById(R.id.profImage);
+       //Picasso.with(this).load("https://www.instagram.com/p/BxiOZtSJq4b/").into(imgV);
 
 
         //  nameView = findViewById(R.id.child);
@@ -61,11 +72,12 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
     }
 
     public void onClick(View view) {
+        String followed_by_name = editText.getText().toString();
         switch(view.getId()) {
             case R.id.save_button:{
                 MyJavaScriptInterface javaScriptInterface = new MyJavaScriptInterface();
                 JSONObject jsonObject = javaScriptInterface.getJSONJsonObject();
-                final Followed_By followed_by_1= new Followed_By("wolfiecindy");
+                final Followed_By followed_by_1= new Followed_By(followed_by_name);
                 Map<String, Integer>  photosUrlsToScoreMap = javaScriptInterface.getPhotosUrl(jsonObject);
                 Map<String, Integer> fewerPhotosUrlsToScoreMap = new HashMap<>();
                 int i=0;
@@ -78,7 +90,7 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
                         break;
                     }
                 }
-               RequestInstagramAPI r = new RequestInstagramAPI(followed_by_1, fewerPhotosUrlsToScoreMap);
+               RequestInstagramAPI r = new RequestInstagramAPI(followed_by_1, photosUrlsToScoreMap);
                 r.execute();
 
               /*  Child child = new Child("ana");
@@ -97,7 +109,7 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
 
             case R.id.add_child_button:{
                  MyJavaScriptInterface javaScriptInterface = new MyJavaScriptInterface();
-                computeInfo(javaScriptInterface);
+                computeInfo(javaScriptInterface, followed_by_name);
 /*
                 JSONObject jsonObject = javaScriptInterface.getJSONJsonObject();
                 Map<String, Integer>  photosUrlsToScoreMap = javaScriptInterface.getPhotosUrl(jsonObject);*/
@@ -120,7 +132,7 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
         }
     }
 
-    private void computeInfo(MyJavaScriptInterface javaScriptInterface) {
+    private void computeInfo(MyJavaScriptInterface javaScriptInterface, String followed_by_name) {
         WebView webView1 = AuthenticationDialog.getWebView();
 
         webView1.addJavascriptInterface(javaScriptInterface, "HTMLOUT");
@@ -131,7 +143,7 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
                 view.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>', false);");
             }
         });
-        webView1.loadUrl(getResources().getString(R.string.get_user_info_url_first)+ "wolfiecindy" + getResources().getString(R.string.get_user_info_url_second));
+        webView1.loadUrl(getResources().getString(R.string.get_user_info_url_first)+ followed_by_name + getResources().getString(R.string.get_user_info_url_second));
         webView1.setVisibility(View.INVISIBLE);
     }
 
@@ -151,6 +163,9 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
         private Map<String, Integer> scoreMap;
         private Followed_By followed_by;
 
+        private List<String> categoriesList;
+        private Map<String, Double> scorePerCategoryMap;
+
 
         public RequestInstagramAPI(Followed_By followed_by, Map<String, Integer>  photosUrlsToScoreMap ){
             this.followed_by = followed_by;
@@ -162,6 +177,13 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
             scoreMap.put("POSSIBLE", 3);
             scoreMap.put("LIKELY", 4);
             scoreMap.put("VERY_LIKELY", 5);
+            this.categoriesList = new ArrayList<>();
+           // categoriesList.add("racy");
+            categoriesList.add("medical");
+            categoriesList.add("spoof");
+            categoriesList.add("adult");
+            categoriesList.add("violence");
+            this.scorePerCategoryMap=new HashMap<>();
         }
 
         @Override
@@ -198,25 +220,48 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
                     Map<String, String>  safeAnnotationToScoreMap = new HashMap<>();
                     storeResponse(responses, safeAnnotationToScoreMap);
                     int scoreForFoto = getScore(responses);
-                    score = score + scoreForFoto;
+                   // score = score + scoreForFoto;
                     photosUrlsToScoreMap.put(entry.getKey(),getScore(responses));
                     InstaPhoto photo = new InstaPhoto(entry.getKey(), safeAnnotationToScoreMap);
                     photo.setScore(scoreForFoto);
                     followed_by.addPhoto(photo);
-                    System.out.println("Analiza");
                 } catch (IOException ex) {
                     System.out.println(ex.getMessage());
                 }
 
             }
-            followed_by.setScore(score);
-            Child child = new Child("ana");
-            child.addFollowedBy(followed_by);
+           // followed_by.setScore(score);
+            for(String category: categoriesList){
+                calculateTotalRiskPerCategory(category);
+            }
+            double maxScore = Collections.max(scorePerCategoryMap.values());
+            String category = getMapKey(maxScore);
+            if(maxScore==0){
+                category ="Safe";
+            }
+            followed_by.setScore(maxScore);
+            followed_by.setCategory(category);
+
+          //  Child child = new Child("ana");
             User u = Info.getUser();
-            u.addChild(child);
+            Child child = u.getChildren().get(0);
+            child.addFollowedBy(followed_by);
+
             DatabaseService service = DatabaseService.getInstance();
             service.addChild(u, child);
             return null;
+        }
+
+        private void calculateTotalRiskPerCategory(String category) {
+            Map<String,  String> photoUrlsToMap=new HashMap<>();
+            for(InstaPhoto photo: followed_by.getPhotos()){
+               String value= photo.getSafeAnnotationToScoreMap().get(category);
+               if(value.equals("POSSIBLE") || value.equals("LIKELY") || value.equals("VERY_LIKELY")){
+                   photoUrlsToMap.put(photo.url, value);
+               }
+            }
+            double sc = (double)photoUrlsToMap.entrySet().size()/ (double)followed_by.getPhotos().size();
+            scorePerCategoryMap.put(category, sc);
         }
 
         private void storeResponse(List<AnnotateImageResponse> responses, Map<String, String>  safeAnnotationToScoreMap){
@@ -240,6 +285,15 @@ public class DashboardActivity extends AppCompatActivity  implements  Authentica
                         scoreMap.get(imageResponse.getSafeSearchAnnotation().get("violence"));
             }
             return score;
+        }
+
+        public String getMapKey(double value) {
+            for (Map.Entry<String, Double> entry : scorePerCategoryMap.entrySet()) {
+                if (entry.getValue().equals(value)) {
+                    return entry.getKey();
+                }
+            }
+            return null;
         }
     }
 

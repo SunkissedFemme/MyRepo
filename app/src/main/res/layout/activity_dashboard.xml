@@ -35,7 +35,12 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />-->
 
+    <EditText android:id="@+id/editTextAddFollowedBy" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:ems="10"
+        android:inputType="textMultiLine" android:layout_marginBottom="10dp">
 
+    <requestFocus />
+    </EditText>
     <Button
         android:id="@+id/add_child_button"
         style="?android:textAppearanceSmall"
@@ -46,6 +51,8 @@
         android:text="@string/action_add_child"
         android:textStyle="bold"
          />
+
+
 
    <!-- <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"

@@ -6,8 +6,9 @@ import java.util.List;
 public class Followed_By {
 
     public String name;
-    public int score;
+    public double score;
     public List<InstaPhoto> photos;
+    public String categoryWithRisk;
 
     public Followed_By(){
 
@@ -18,7 +19,7 @@ public class Followed_By {
         photos = new ArrayList<>();
     }
 
-    public void setScore(int score){
+    public void setScore(double score){
         this.score = score;
     }
 
@@ -34,7 +35,15 @@ public class Followed_By {
         return name;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
+    }
+
+    public void setCategory(String categoryWithRisk){
+        this.categoryWithRisk=categoryWithRisk;
+    }
+
+    public String getCategory(){
+        return categoryWithRisk;
     }
 }

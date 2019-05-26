@@ -28,11 +28,11 @@
                 android:weightSum="5">
 
                 <ImageView
-                    android:id="@+id/profile_image"
+                    android:id="@+id/vProfileImage"
                     android:layout_width="0dp"
                     android:layout_height="55dp"
                     android:layout_weight="1"
-                    android:src="@drawable/logo"
+                    android:src="@drawable/instagram"
                     />
 
                 <LinearLayout
@@ -74,14 +74,31 @@
 
 
                     <TextView
+                        android:id="@+id/vscore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/roun_rect_orange"
-                        android:text="Invited"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="0dp"
-                        android:id="@+id/vscore"
+                        android:text="Invited"
                         android:textColor="#fff"
                         android:textSize="15sp"
+                        android:textStyle="bold" />
+                        <!--android:background="@drawable/roun_rect_orange"-->
+
+
+                    <TextView
+                        android:id="@+id/vcategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/vscore"
+                        android:layout_alignStart="@+id/vscore"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginStart="9dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="TextView"
+                        android:textColor="@color/colorGray"
+                        android:textSize="10dp"
                         android:textStyle="bold" />
                 </RelativeLayout>
 
